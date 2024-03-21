@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model TeeTime {
+  id Int @id
+  date String
+  start_time String
+  open_spots Int
+  green_fee Int
+  out_of_capacity Boolean
+}
+
+model GreenFee {
+  id Int @id
+  green_fee Int
+  price Int
+  teetime_id Int
+  affiliation_type_id Int
+}
