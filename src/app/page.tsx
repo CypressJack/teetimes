@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { filterAndFormatDates, getNextSixDaysPST, formatDate, getDayOfWeek } from '@/utils';
+import { filterAndFormatDates, getNextSixDaysPST, formatDate, getDayOfWeek } from '@/utils/dates';
 import Image from 'next/image';
 import logo from '@/public/logo.png'
 
