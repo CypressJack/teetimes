@@ -58,6 +58,11 @@ export function filterDates(teeTimes: TeeTime[], dateString: string) {
   })
 }
 
+export function sortTeeTimes(teeTimes: TeeTime[]) {
+  teeTimes.sort((a, b) => a.start_time.localeCompare(b.start_time))
+  return teeTimes;
+}
+
 export function filterAndFormatDates(events: TeeTime[], dateString: string) {
   const timeZone = 'America/Los_Angeles';
   const now = new Date();
