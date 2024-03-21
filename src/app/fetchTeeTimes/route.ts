@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic' // defaults to auto
-import { PrismaClient } from '@prisma/client';
 import { getNextSixDaysPST } from '@/utils/dates';
 import { TeeTime } from '../types';
+import { prisma } from "@/lib/db";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -22,8 +22,6 @@ async function fetchOneWeek() {
 
 async function fetchData(date: string) {
   try {
-    const prisma = new PrismaClient();
-
     // Fetching tee times for four players
     const response = await fetch(`https://www.chronogolf.com/marketplace/clubs/593/teetimes?date=${date}&course_id=573&affiliation_type_ids%5B%5D=3089&affiliation_type_ids%5B%5D=3089&affiliation_type_ids%5B%5D=3089&affiliation_type_ids%5B%5D=3089`);
 
