@@ -1,8 +1,8 @@
-import { addDays, getDate, getYear, getMonth } from 'date-fns';
+import { addDays, getDate, getYear, getMonth, parse, getUnixTime, addHours, isAfter, isBefore } from 'date-fns';
 import { zonedTimeToUtc, utcToZonedTime, format } from 'date-fns-tz';
 import { TeeTime } from '@prisma/client';
 
-export function newFunction(){
+export function newFunction() {
   return true;
 }
 
@@ -21,6 +21,41 @@ export function getNextSixDaysPST() {
   }
 
   return dates;
+}
+
+function isDaylightSavings(date: Date) {
+  const daylightStart2024 = parse('2024-03-10T02:00', "yyyy-MM-dd'T'HH:mm", new Date());
+  const daylightEnd2024 = parse('2024-09-03T02:00', "yyyy-MM-dd'T'HH:mm", new Date());
+
+  if (isAfter(date, daylightStart2024) && isBefore(date, daylightEnd2024)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function timeHasPassed(date: Date, currentTimestampUTC: number) {
+  let teeTimeTimestampUTC;
+
+  if (isDaylightSavings(date)) {
+    teeTimeTimestampUTC = getUnixTime(addHours(date, 7));
+  } else {
+    teeTimeTimestampUTC = getUnixTime(addHours(date, 8));
+  }
+  let isInThePast = teeTimeTimestampUTC < currentTimestampUTC;
+
+  return isInThePast ? false : true;
+}
+
+export function filterDates(teeTimes: TeeTime[], dateString: string) {
+  const currentTimestampUTC = getUnixTime(new Date());
+  return teeTimes.filter((teeTime) => {
+    const timeString = teeTime.start_time;
+    const dateTimeString = `${dateString}T${timeString}`;
+    const date = parse(dateTimeString, "yyyy-MM-dd'T'HH:mm", new Date());
+    teeTime.start_time = format(date, 'p');
+    return timeHasPassed(date, currentTimestampUTC);
+  })
 }
 
 export function filterAndFormatDates(events: TeeTime[], dateString: string) {
@@ -50,39 +85,12 @@ export function filterAndFormatDates(events: TeeTime[], dateString: string) {
   return filteredEvents;
 }
 
-export function formatDate(dateString:string) {
-  const months = ["January", "February", "March", "April", "May", "June",
-                  "July", "August", "September", "October", "November", "December"];
-
-  const timeZone = 'America/Los_Angeles';
-  const zonedDate = utcToZonedTime(dateString, timeZone);
-  const year = getYear(zonedDate);
-  const month = months[getMonth(zonedDate)];
-  const day = getDate(zonedDate);
-
-  const ordinalSuffix = (day: number) => {
-    const j = day % 10,
-          k = day % 100;
-    if (j === 1 && k !== 11) {
-        return day + "st";
-    }
-    if (j === 2 && k !== 12) {
-        return day + "nd";
-    }
-    if (j === 3 && k !== 13) {
-        return day + "rd";
-    }
-    return day + "th";
-  }
-
-  return `${month} ${ordinalSuffix(day)}, ${year}`;
+export function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return format(date, 'PPP');
 }
 
-export function getDayOfWeek(dateString:string) {
-  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const timeZone = 'America/Los_Angeles';
-  const zonedDate = utcToZonedTime(dateString, timeZone);
-  const day = getDate(zonedDate);
+export function getDayOfWeek(dateString: string) {
   const date = new Date(dateString);
-  return daysOfWeek[day];
+  return format(date, 'EEEE');
 }
