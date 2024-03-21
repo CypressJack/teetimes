@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic' // defaults to auto
 import { getNextSixDaysPST, formatDate, getDayOfWeek, filterDates } from '@/utils/dates';
 import { prisma } from "@/lib/db";
 import { headers } from 'next/headers'
