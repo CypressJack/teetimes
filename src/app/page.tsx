@@ -1,8 +1,9 @@
 import { getNextSixDaysPST, formatDate, getDayOfWeek, filterDates } from '@/utils/dates';
 import { prisma } from "@/lib/db";
-
+import { headers } from 'next/headers'
 
 export default async function Home() {
+  const headersList = headers();
   const dates = getNextSixDaysPST();
   let teeTimeDates = [];
 
