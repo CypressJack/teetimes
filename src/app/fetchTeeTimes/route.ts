@@ -27,9 +27,15 @@ export async function GET(request: Request) {
 
 async function fetchData(date: string) {
   // Fetching tee times for four players
-  const response = await fetch(`https://www.chronogolf.com/marketplace/clubs/593/teetimes?date=${date}&course_id=573&affiliation_type_ids%5B%5D=3089&affiliation_type_ids%5B%5D=3089&affiliation_type_ids%5B%5D=3089&affiliation_type_ids%5B%5D=3089`);
+  const url = `https://www.chronogolf.com/marketplace/clubs/593/teetimes?date=${date}&course_id=573&affiliation_type_ids%5B%5D=3089&affiliation_type_ids%5B%5D=3089&affiliation_type_ids%5B%5D=3089&affiliation_type_ids%5B%5D=3089`;
+  const response = await fetch(url);
 
   const teeTimes: TeeTime[] = await response.json();
+
+  if (!Array.isArray(teeTimes)) {
+    console.log('response', teeTimes);
+    return []
+  }
 
   for (let teeTime of teeTimes) {
     const id = teeTime.id;
