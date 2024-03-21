@@ -1,5 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import { filterAndFormatDates, getNextSixDaysPST, formatDate, getDayOfWeek } from '@/utils';
+import Image from 'next/image';
+import logo from '@/public/logo.png'
+
+export const dynamic = 'force-dynamic'
 
 export default async function Home() {
 
@@ -16,10 +20,13 @@ export default async function Home() {
     }
   }
 
-  console.log(teeTimeDates[0]);
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-between mt-12">
+      {/* <Image
+      className="w-48 h-auto"
+        src={logo}
+        alt=""
+      /> */}
       <h1
         className="font-bold text-3xl px-4 text-center pb-2"
       >
