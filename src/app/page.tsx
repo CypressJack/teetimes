@@ -34,7 +34,7 @@ export default async function Home() {
               key={`date-${i}`}
             >
               <div
-                className="bg-black py-3"
+                className="bg-green-950 py-3"
               >
                 <h2
                   className='font-bold text-lg text-center'
@@ -42,24 +42,27 @@ export default async function Home() {
                   {getDayOfWeek(date[0]?.date)}
                 </h2>
                 <h2
-                  className='font-bold text-lg mb-2 text-center'
+                  className='font-bold text-lg mb-1 text-center'
                 >
                   {formatDate(date[0]?.date)}
                 </h2>
               </div>
               <table className="w-full mb-8 rounded-md text-sm text-left rtl:text-right text-white">
-                <thead className="text-xs bg-black uppercase text-white rounded-lg">
+                <thead className="text-xs bg-green-950 uppercase text-white rounded-lg">
                   <tr
                     className='rounded-lg'
                   >
                     <th scope="col" className="px-6 py-3">
                       Tee Time
                     </th>
-                    <th scope="col" className="px-6 py-3">
-                      Players
+                    <th scope="col" className="px-2 py-3">
+                      Spots
+                    </th>
+                    <th scope="col" className="px-3 py-3">
+                      Price
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Price
+                      Link
                     </th>
                   </tr>
                 </thead>
@@ -67,15 +70,22 @@ export default async function Home() {
                   {date?.map((teeTime) => {
                     if (teeTime.out_of_capacity) return null;
                     return (
-                      <tr key={teeTime.id} className="border-b bg-white border-gray-400 hover:bg-gray-600 text-black">
-                        <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap ">
+                      <tr key={teeTime.id} className="border-b bg-white border-gray-400 hover:bg-gray-400 text-black">
+                        <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
                           {teeTime.start_time}
                         </td>
-                        <td className="px-6 py-4 text-center">
+                        <td className="px-3 py-4 text-center ">
                           {teeTime.open_spots}
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-3 py-4 font-semibold">
                           ${teeTime.green_fee}
+                        </td>
+                        <td className="px-3 py-4 ">
+                          <a
+                            className="cursor-pointer font-semibold focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                          >
+                            Book
+                          </a>
                         </td>
                       </tr>
                     )

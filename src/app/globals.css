@@ -2,13 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: #008000;
-}
-
 body {
-  background-color: var(--foreground-rgb);
-  color: #ffffff;
+  @apply bg-green-800 text-white;
 }
 
 @layer utilities {
