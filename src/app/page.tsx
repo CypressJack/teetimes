@@ -69,6 +69,7 @@ export default async function Home() {
                 <tbody>
                   {date?.map((teeTime) => {
                     if (teeTime.out_of_capacity) return null;
+                    const bookingUrl = `https://www.chronogolf.com/club/593/widget?target=_blank&source=chronogolf&medium=profile#?course_id=573&nb_holes=18&date=${teeTime.date}&affiliation_type_ids=3089,3089,3089,3089&teetime_id=${teeTime.id}&is_deal=false`
                     return (
                       <tr key={teeTime.id} className="border-b bg-white border-gray-400 hover:bg-gray-400 text-black">
                         <td scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
@@ -82,6 +83,9 @@ export default async function Home() {
                         </td>
                         <td className="px-3 py-4 ">
                           <a
+                            rel='nofollow; noindex;'
+                            target='_blank'
+                            href={bookingUrl}
                             className="cursor-pointer font-semibold focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                           >
                             Book
