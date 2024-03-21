@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic' // defaults to auto
 import { PrismaClient } from '@prisma/client';
-import { getNextSixDaysPST } from '@/utils';
+import { getNextSixDaysPST } from '@/utils/dates';
 import { TeeTime } from '../types';
 
 export async function GET(request: Request) {
