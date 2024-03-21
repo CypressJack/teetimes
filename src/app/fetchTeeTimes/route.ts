@@ -6,8 +6,7 @@ import { TeeTime } from '../types';
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const course = searchParams.get('course');
-  fetchOneWeek();
-
+  await fetchOneWeek();
   return Response.json({ status: "ok" })
 }
 
