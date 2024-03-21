@@ -2,22 +2,18 @@ export const dynamic = 'force-dynamic' // defaults to auto
 import { getNextSixDaysPST } from '@/utils/dates';
 import { TeeTime } from '../types';
 import { prisma } from "@/lib/db";
+import { headers } from 'next/headers'
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
-  const course = searchParams.get('course');
-  await fetchOneWeek();
-  return Response.json({ status: "ok" })
-}
+  const headersList = headers();
 
-async function fetchOneWeek() {
   const days = getNextSixDaysPST();
 
   for (const day of days) {
-    setTimeout(async () => {
-      await fetchData(day);
-    }, 5000);
+    await fetchData(day);
   }
+  
+  return Response.json({ status: "ok" })
 }
 
 async function fetchData(date: string) {
