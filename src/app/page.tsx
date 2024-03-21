@@ -29,22 +29,26 @@ export default async function Home() {
       >
         Available Tee Times
       </h1>
-      <div className="overflow-x-auto shadow-md">
+      <div className="overflow-x-auto">
         {teeTimeDates?.map((date, i) => {
           return (
             <div
               key={`date-${i}`}
             >
-              <h2
-                className='font-bold text-lg mb-2 text-center'
+              <div
+                className="bg-black py-3"
               >
-                {getDayOfWeek(date[0]?.date)}
-              </h2>
-              <h2
-                className='font-bold text-lg mb-2 text-center'
-              >
-                {formatDate(date[0]?.date)}
-              </h2>
+                <h2
+                  className='font-bold text-lg text-center'
+                >
+                  {getDayOfWeek(date[0]?.date)}
+                </h2>
+                <h2
+                  className='font-bold text-lg mb-2 text-center'
+                >
+                  {formatDate(date[0]?.date)}
+                </h2>
+              </div>
               <table className="w-full mb-8 rounded-md text-sm text-left rtl:text-right text-white">
                 <thead className="text-xs bg-black uppercase text-white rounded-lg">
                   <tr
