@@ -2,6 +2,10 @@ import { addDays, getDate, getYear, getMonth } from 'date-fns';
 import { zonedTimeToUtc, utcToZonedTime, format } from 'date-fns-tz';
 import { TeeTime } from '@prisma/client';
 
+export function newFunction(){
+  return true;
+}
+
 export function getNextSixDaysPST() {
   const timeZone = 'America/Los_Angeles';
   let dates = [];
@@ -53,7 +57,7 @@ export function formatDate(dateString:string) {
   const timeZone = 'America/Los_Angeles';
   const zonedDate = utcToZonedTime(dateString, timeZone);
   const year = getYear(zonedDate);
-  const month = months[getMonth(zonedDate) + 1];
+  const month = months[getMonth(zonedDate)];
   const day = getDate(zonedDate);
 
   const ordinalSuffix = (day: number) => {
@@ -76,6 +80,9 @@ export function formatDate(dateString:string) {
 
 export function getDayOfWeek(dateString:string) {
   const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const timeZone = 'America/Los_Angeles';
+  const zonedDate = utcToZonedTime(dateString, timeZone);
+  const day = getDate(zonedDate);
   const date = new Date(dateString);
-  return daysOfWeek[date.getDay()];
+  return daysOfWeek[day];
 }
