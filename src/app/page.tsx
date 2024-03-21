@@ -16,6 +16,7 @@ export default async function Home() {
     }
   }
 
+  console.log(teeTimeDates[0]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between mt-12">
@@ -31,6 +32,7 @@ export default async function Home() {
       </h1>
       <div className="overflow-x-auto">
         {teeTimeDates?.map((date, i) => {
+          if (!date.length) return null;
           return (
             <div
               key={`date-${i}`}
