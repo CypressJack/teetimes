@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic' // defaults to auto
+import { revalidatePath } from 'next/cache'
 import { getNextSixDaysPST } from '@/utils/dates';
 import { TeeTime } from '../types';
 import { prisma } from "@/lib/db";
@@ -10,6 +11,8 @@ export async function GET(request: Request) {
     promises.push(fetchData(day));
   }
   await Promise.all(promises);
+  // revalidate home page when new data is fetched
+  revalidatePath('/') 
   return Response.json({ status: "ok" })
 }
 
