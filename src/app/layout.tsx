@@ -16,7 +16,6 @@ export const metadata: Metadata = {
   title: "TeeTimes",
   description: "Find out about Tee Times",
   generator: "Next.js",
-  manifest: "/manifest.json",
   icons: {
     apple: [
       { rel: 'apple-touch-icon', url: '/icons/apple-touch-icon.png' },
