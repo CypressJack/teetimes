@@ -13,6 +13,12 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
+  applicationName: 'TeeTimes',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'TeeTimes'
+  },
   title: "TeeTimes",
   description: "Find out about Tee Times",
   generator: "Next.js",
