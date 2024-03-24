@@ -1,21 +1,8 @@
-export const dynamic = 'force-dynamic' // defaults to auto
-import { getNextSixDaysPST, formatDate, getDayOfWeek, filterDates, sortTeeTimes } from '@/utils/dates';
-import { prisma } from "@/lib/db";
-import { headers } from 'next/headers'
+import { formatDate, getDayOfWeek, } from '@/utils/dates';
+import { getDbTeeTimes } from '@/utils/db';
 
 export default async function Home() {
-  const headersList = headers();
-  const dates = getNextSixDaysPST();
-  let teeTimeDates = [];
-
-  for (const date of dates) {
-    const teeTimes = await prisma.teeTime.findMany({ where: { date: date } });
-    if (teeTimes) {
-      const filteredTeeTimes = filterDates(teeTimes, date);
-      const sortedTeeTimes = sortTeeTimes(filteredTeeTimes);
-      teeTimeDates.push(sortedTeeTimes);
-    }
-  }
+  const teeTimeDates = await getDbTeeTimes();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between mt-12">
