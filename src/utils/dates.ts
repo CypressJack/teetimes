@@ -59,6 +59,7 @@ export function filterDates(teeTimes: TeeTime[], dateString: string) {
 }
 
 export function sortTeeTimes(teeTimes: TeeTime[]) {
+  if (!Array.isArray(teeTimes)) return teeTimes;
   const sortedTeeTimes = teeTimes.toSorted((a, b) => a.id > b.id ? 1 : -1)
   return sortedTeeTimes;
 }
