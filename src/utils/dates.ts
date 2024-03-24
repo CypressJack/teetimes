@@ -59,8 +59,8 @@ export function filterDates(teeTimes: TeeTime[], dateString: string) {
 }
 
 export function sortTeeTimes(teeTimes: TeeTime[]) {
-  teeTimes.sort((a, b) => a.start_time.localeCompare(b.start_time))
-  return teeTimes;
+  const sortedTeeTimes = teeTimes.toSorted((a, b) => a.id > b.id ? 1 : -1)
+  return sortedTeeTimes;
 }
 
 export function filterAndFormatDates(events: TeeTime[], dateString: string) {
